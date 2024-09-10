@@ -11,7 +11,7 @@ class ISS_Lab:
         self.hash_value = None
         self.backup = None
 
-    def _key_to_int_sequence(self, key):
+    def _key_to_int_sequence(self, key):sss
         if isinstance(key, int):
             return [key]
         return [ord(char) for char in key]
