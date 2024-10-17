@@ -10,6 +10,13 @@ section .data
 
     output: db 'Result is: %d', 10, 0
 
+    header_addition: db '==== ADDITION =======================', 10, 0
+    header_subtraction: db '==== SUBTRACTION ====================', 10, 0
+    header_multiplication: db '==== MULTIPLICATION =================', 10, 0
+    header_division: db '==== DIVISION =======================', 10, 0
+
+    footer: db '==== SIMPLE CALCULATOR by Herald ====', 10, 0
+
 ; Number input
     intInput1: db 'Enter operation 1: ', 0
     op1: db '%d', 0
@@ -57,6 +64,23 @@ _main:
     call _scanf
     add esp, 8
 
+    ; Perform the arithmetic operation based on the user's choice
+    mov eax, [entered_num]
+    cmp eax, 1
+    je addition
+    cmp eax, 2
+    je subtraction
+    cmp eax, 3
+    je multiplication
+    cmp eax, 4
+    je division
+    jmp end
+
+addition:
+    push header_addition
+    call _printf
+    add esp, 4
+
     push intInput1
     call _printf
     add esp, 4
@@ -77,37 +101,96 @@ _main:
     call _scanf
     add esp, 8
 
-    ; Perform the arithmetic operation based on the user's choice
-    mov eax, [entered_num]
-    cmp eax, 1
-    je addition
-    cmp eax, 2
-    je subtraction
-    cmp eax, 3
-    je multiplication
-    cmp eax, 4
-    je division
-    jmp end
-
-addition:
     mov eax, [operation1]
     add eax, [operation2]
     mov [result], eax
     jmp print_result
 
 subtraction:
+    push header_subtraction
+    call _printf
+    add esp, 4
+
+    push intInput1
+    call _printf
+    add esp, 4
+
+    lea eax, [operation1]
+    push eax
+    push op1
+    call _scanf
+    add esp, 8
+
+    push intInput2
+    call _printf
+    add esp, 4
+
+    lea eax, [operation2]
+    push eax
+    push op2
+    call _scanf
+    add esp, 8
+
     mov eax, [operation1]
     sub eax, [operation2]
     mov [result], eax
     jmp print_result
 
 multiplication:
+    push header_multiplication
+    call _printf
+    add esp, 4
+
+    push intInput1
+    call _printf
+    add esp, 4
+
+    lea eax, [operation1]
+    push eax
+    push op1
+    call _scanf
+    add esp, 8
+
+    push intInput2
+    call _printf
+    add esp, 4
+
+    lea eax, [operation2]
+    push eax
+    push op2
+    call _scanf
+    add esp, 8
+
     mov eax, [operation1]
     imul eax, [operation2]
     mov [result], eax
     jmp print_result
 
 division:
+    push header_division
+    call _printf
+    add esp, 4
+
+    push intInput1
+    call _printf
+    add esp, 4
+
+    lea eax, [operation1]
+    push eax
+    push op1
+    call _scanf
+    add esp, 8
+
+    push intInput2
+    call _printf
+    add esp, 4
+
+    lea eax, [operation2]
+    push eax
+    push op2
+    call _scanf
+    add esp, 8
+
     mov eax, [operation1]
     cdq
     idiv dword [operation2]
@@ -119,6 +202,10 @@ print_result:
     push output
     call _printf
     add esp, 8
+
+    push footer
+    call _printf
+    add esp, 4
 
 end:
     ret
