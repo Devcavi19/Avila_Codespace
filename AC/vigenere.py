@@ -30,7 +30,10 @@ def viginere_cipher(text: str, key: str, alphabet: str, mode: str = 'encrypt', v
             error_msg += f"in plaintext: {', '.join(invalid_text_chars)}\n"
         if invalid_key_chars:
             error_msg += f"in key: {', '.join(invalid_key_chars)}\n"
-        error_msg += "are not in alphabet"
+        
+        # Determine if we should use singular or plural form
+        total_invalid = len(invalid_text_chars) + len(invalid_key_chars)
+        error_msg += f"{'is' if total_invalid == 1 else 'are'} not in alphabet"
         raise ValueError(error_msg)
     
     # Process text
@@ -104,7 +107,10 @@ def main():
     
     try:
         result = viginere_cipher(text, key, alphabet, mode, verbose)
-        print(f"\nEncrypted result: {result}")  # Changed to match expected output format
+        if mode == 'encrypt':
+            print(f"\nEncrypted result: {result}")
+        else:
+            print(f"\nDecrypted result: {result}")
     except ValueError as e:
         print(e)
 
