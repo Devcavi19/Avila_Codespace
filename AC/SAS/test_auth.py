@@ -2,7 +2,7 @@ import pytest
 import bcrypt
 # Assuming the solution is in auth_challenge.py
 # We import the functions and the global database dictionary
-from AuthenticationandPasswordSecurity_ActivitySol import register_user, login_user, user_database
+from Avila_Simple_Auth_sol import register_user, login_user, user_database
 
 # Fixture to automatically clear the user_database before each test function
 @pytest.fixture(autouse=True)
